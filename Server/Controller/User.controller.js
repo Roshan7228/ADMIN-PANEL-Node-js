@@ -62,7 +62,7 @@ let signupuser = async (request, response) => {
 };
 
 
-let signinuser = (request, response) => {
+let signinuser = async(request, response) => {
     let { Email, Password } = request.body;
     if (!Email || !Password) {
         return response.status(400).json({

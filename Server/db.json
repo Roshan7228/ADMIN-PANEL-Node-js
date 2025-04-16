@@ -72,6 +72,22 @@
                     "health": 100
                 }
             ]
+        },
+        {
+            "name": "Captain Marvel",
+            "powers": [
+                "superhuman strength",
+                "energy projection",
+                "flight"
+            ],
+            "health": 95,
+            "villains": [
+                {
+                    "name": "Yon-Rog",
+                    "health": 60
+                }
+            ],
+            "id": 6
         }
     ]
 }
