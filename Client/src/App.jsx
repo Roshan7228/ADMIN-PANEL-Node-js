@@ -1,19 +1,26 @@
 import React from "react"
-
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "./Component/app-sidebar.jsx";
+import Mainroutes from "./Allroutes/Mainroutes"
+import Dashboard from "./Page/Dashboard"
+import { useLocation } from "react-router"
 
 function App() {
+
+  const location = useLocation();
+  const isAuthPage = ["/Signin", "/Signup", "/Addherovillains","/Updatevillains"].some(path =>
+    location.pathname.startsWith(path)
+  );
+
   return (
     <>
-      <div className="w-full min-h-screen bg-gradient-to-r from-black via-gray-900 to-black text-white">
-        <SidebarProvider className="dark">
-          <AppSidebar />
-          <SidebarTrigger className="mt-[5px] size-[50px] text-[white] hover:bg-gray-700 rounded-lg transition-all" />
-        </SidebarProvider>
-      </div>
+      {isAuthPage ? (
+        <Mainroutes />
+      ) : (
+        <Dashboard>
+          <Mainroutes />
+        </Dashboard>
+      )}
     </>
   )
 }
 
-export default App
+export default App;

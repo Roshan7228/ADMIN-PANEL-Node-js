@@ -1,7 +1,6 @@
 let fs = require('fs');
 let { addID } = require('../middlewares/addID.middleware');
 const { json } = require('stream/consumers');
-
 let createdata = (request, response) => {
 
     let newdata = request.body;
@@ -14,14 +13,12 @@ let createdata = (request, response) => {
         }
 
         let parsedData = JSON.parse(data);
-        let heroes = parsedData.heroes;
-
+        let heroes = parsedData;
         heroes.push(newdata);
         let updatedHeroes = addID(heroes);
-
         parsedData.heroes = updatedHeroes;
 
-        fs.writeFile("./db.json", JSON.stringify(parsedData), (err) => {
+        fs.writeFile("./db.json", JSON.stringify(parsedData, null, 2), 'utf-8', (err) => {
             if (err) {
                 return response.status(400).json({
                     message: err.message
@@ -35,6 +32,7 @@ let createdata = (request, response) => {
         });
     });
 };
+
 
 let gethero = (request, response) => {
     fs.readFile("./db.json", "utf-8", (error, data) => {
@@ -52,13 +50,15 @@ let gethero = (request, response) => {
 }
 let UpdateVillain = (request, response) => {
     let { hero_id } = request.params;
-    let { name, health } = request.body;
+    let { villains } = request.body;
 
-    if (!name || !health) {
+    if (!villains || villains.length === 0) {
         return response.status(400).json({
-            message: "Please provide both name and health"
+            message: "Please provide villains data"
         });
     }
+
+    let { name, health } = villains[0];
 
     fs.readFile('./db.json', 'utf-8', (err, data) => {
         if (err) {
@@ -69,14 +69,16 @@ let UpdateVillain = (request, response) => {
 
         let Maindata = JSON.parse(data);
         let heroes = Maindata.heroes;
+        console.log(Maindata)
 
-        let hero = heroes.find(hero => hero.id == hero_id);
+        let hero = Maindata.find(hero => hero.id == hero_id);
 
         if (!hero) {
             return response.status(404).json({
                 message: "Hero not found"
             });
         }
+
         if (hero.villains && hero.villains.length > 0) {
             hero.villains[0].name = name;
             hero.villains[0].health = health;
@@ -97,6 +99,7 @@ let UpdateVillain = (request, response) => {
     });
 }
 
+
 let deleteheros = (request, response) => {
     let { hero_id } = request.params;
 
@@ -107,9 +110,10 @@ let deleteheros = (request, response) => {
                 message: err.message
             }
             let Maindata = JSON.parse(data);
-            let heroes = Maindata.heroes;
 
-            let updateHeroes = heroes.filter((hero) => hero.id != hero_id);
+
+
+            let updateHeroes = Maindata.filter((hero) => hero.id != hero_id);
             fs.writeFile("./db.json", JSON.stringify(updateHeroes), "utf-8", (err) => {
                 if (err) {
                     return response.status(400).json({

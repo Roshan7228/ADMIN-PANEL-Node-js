@@ -1,18 +1,18 @@
-"use client"
-
 import {
     BellIcon,
     CreditCardIcon,
     LogOutIcon,
     MoreVerticalIcon,
-    UserCircleIcon,
+    UserCircleIcon
 } from "lucide-react"
 
+import { Link } from "react-router-dom"
 import {
     Avatar,
     AvatarFallback,
-    AvatarImage,
+    AvatarImage
 } from "@/components/ui/avatar"
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -20,17 +20,20 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-    DropdownMenuTrigger,
+    DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
+
 import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-    useSidebar,
+    useSidebar
 } from "@/components/ui/sidebar"
 
 export function NavUser() {
-    const { isMobile } = useSidebar()
+    const { isMobile } = useSidebar();
+
+    let useroradmindata = JSON.parse(sessionStorage.getItem("LoginData"));
 
     return (
         <SidebarMenu>
@@ -46,8 +49,12 @@ export function NavUser() {
                                 <AvatarFallback className="rounded-xl font-bold">CN</AvatarFallback>
                             </Avatar>
                             <div className="grid flex-1 text-left leading-tight ml-2">
-                                <span className="truncate font-semibold text-base">Roshan Kumar</span>
-                                <span className="truncate text-xs text-muted-foreground">Frontend Developer</span>
+                                <span className="truncate font-semibold text-base">
+                                    {useroradmindata ? useroradmindata.Username : "Guest"}
+                                </span>
+                                <span className="truncate text-xs text-gray-400">
+                                    {useroradmindata ? useroradmindata.role : ""}
+                                </span>
                             </div>
                             <MoreVerticalIcon className="ml-auto size-5 opacity-70" />
                         </SidebarMenuButton>
@@ -63,33 +70,43 @@ export function NavUser() {
                             <div className="flex items-center gap-3">
                                 <Avatar className="h-10 w-10 rounded-xl">
                                     <AvatarImage />
-                                    <AvatarFallback className="rounded-xl font-bold bg-transparent border border-1">CN</AvatarFallback>
+                                    <AvatarFallback className="rounded-xl font-bold bg-transparent border">CN</AvatarFallback>
                                 </Avatar>
                                 <div className="grid flex-1 text-left leading-tight">
-                                    <span className="truncate font-semibold text-base text-white">Roshan Kumar</span>
-                                    <span className="truncate text-xs text-muted-foreground">Frontend Developer</span>
+                                    <span className="truncate font-semibold text-base text-white">
+                                        {useroradmindata ? useroradmindata.Username : "Guest"}
+                                    </span>
+                                    <span className="truncate text-xs text-gray-400">
+                                        {useroradmindata ? useroradmindata.role : ""}
+                                    </span>
                                 </div>
                             </div>
                         </DropdownMenuLabel>
 
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem className="gap-2 text-[17px]  hover:bg-gray-100/20 rounded-lg transition py-2 mb-2">
+                            <DropdownMenuItem className="gap-2 text-[17px] hover:bg-gray-100/20 rounded-lg transition py-2 mb-2">
                                 <UserCircleIcon className="size-5" />
                                 Account
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="gap-2 text-[17px]  hover:bg-gray-100/20 rounded-lg transition py-2 mb-2">
-                                <CreditCardIcon className="size-5" />
-                                Signin
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="gap-2 text-[17px]  hover:bg-gray-100/20 rounded-lg transition py-2 mb-2">
-                                <BellIcon className="size-5" />
-                                Signup
-                            </DropdownMenuItem>
+
+                            <Link to="/Signin">
+                                <DropdownMenuItem className="gap-2 text-[17px] hover:bg-gray-100/20 rounded-lg transition py-2 mb-2">
+                                    <CreditCardIcon className="size-5" />
+                                    Signin
+                                </DropdownMenuItem>
+                            </Link>
+
+                            <Link to="/Signup">
+                                <DropdownMenuItem className="gap-2 text-[17px] hover:bg-gray-100/20 rounded-lg transition py-2 mb-2">
+                                    <BellIcon className="size-5" />
+                                    Signup
+                                </DropdownMenuItem>
+                            </Link>
                         </DropdownMenuGroup>
 
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="gap-2 text-[17px]  hover:bg-gray-100/20 rounded-lg transition py-2 mb-2">
+                        <DropdownMenuItem className="gap-2 text-[17px] hover:bg-gray-100/20 rounded-lg transition py-2 mb-2">
                             <LogOutIcon className="size-5" />
                             Log out
                         </DropdownMenuItem>

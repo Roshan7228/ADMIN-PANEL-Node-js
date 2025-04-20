@@ -39,7 +39,7 @@ let signupuser = async (request, response) => {
                     role,
                     Password: hash
                 };
-                jwt.sign({ user }, "kcsxsx", { algorithm: 'HS256' }, function (err, token) {
+                jwt.sign({ user }, "kcsxsx", { expiresIn: "5h", algorithm: 'HS256' }, function (err, token) {
                     if (err) {
                         response.status(400).json({
                             message: err.message
@@ -62,7 +62,7 @@ let signupuser = async (request, response) => {
 };
 
 
-let signinuser = async(request, response) => {
+let signinuser = async (request, response) => {
     let { Email, Password } = request.body;
     if (!Email || !Password) {
         return response.status(400).json({

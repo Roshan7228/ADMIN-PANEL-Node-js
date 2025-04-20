@@ -134,7 +134,15 @@
   }
 }
 
+:root {
+  --chart-1: 200, 100%, 50%; /* Blue */
+  --chart-2: 120, 100%, 50%; /* Green */
+}
 
+.dark {
+  --chart-1: 120, 100%, 50%; /* Green */
+  --chart-2: 200, 100%, 50%; /* Blue */
+}
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -143,3 +151,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(to right, black, #1f2937, black);  /* via-gray-900 ka hex: #1f2937 */
+  color: white;
+}
+
